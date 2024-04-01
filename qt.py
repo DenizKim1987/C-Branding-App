@@ -1,16 +1,16 @@
 import datetime, time, re
 from selenium import webdriver
-from selenium.webdriver.firefox.options import Options
+from selenium.webdriver.chrome.options import Options
 from bs4 import BeautifulSoup
 
 class Scraper:
     def __init__(self, url):
-        self.firefox_options = Options()
-        self.firefox_options.add_argument("--headless")  # 헤드리스 모드
-        self.firefox_options.add_argument("--no-sandbox")  # 노-샌드박스 옵션 추가 (필요한 경우)
-        self.firefox_options.add_argument("--disable-dev-shm-usage")  # dev-shm-usage 비활성화 (필요한 경우)
-        # Firefox 드라이버 인스턴스 생성 시, FirefoxOptions 사용
-        self.driver = webdriver.Firefox(options=self.firefox_options)
+        self.chrome_options = Options()
+        self.chrome_options.add_argument("--headless")  # 헤드리스 모드
+        self.chrome_options.add_argument("--no-sandbox")  # 노-샌드박스 옵션 추가
+        self.chrome_options.add_argument("--disable-dev-shm-usage")  # dev-shm-usage 비활성화
+        # Chrome 드라이버 인스턴스 생성 시, ChromeOptions 사용
+        self.driver = webdriver.Chrome(options=self.chrome_options)
         self.url = url
 
     def scrap(self):
