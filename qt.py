@@ -7,7 +7,7 @@ from bs4 import BeautifulSoup
 class Scraper:
     def __init__(self, url):
         self.chrome_options = Options()
-        self.chrome_options.add_argument("--headless")  # Headless 모드 활성화
+        self.chrome_options.add_argument("--headless=new")  # Headless 모드 활성화
         self.chrome_options.add_argument("--no-sandbox")
         self.chrome_options.add_argument("--disable-dev-shm-usage")
         # Chrome 드라이버 인스턴스 생성 시, ChromeOptions 사용
