@@ -1,18 +1,18 @@
 import datetime, time, re
 from selenium import webdriver
+from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.chrome.options import Options
-from selenium.webdriver.chrome.service import Service as ChromeService
 from bs4 import BeautifulSoup
 
 class Scraper:
     def __init__(self, url):
-        self.service = ChromeService().install()
         self.chrome_options = Options()
-        self.chrome_options.add_argument("--headless")  # 헤드리스 모드
-        self.chrome_options.add_argument("--no-sandbox")  # 노-샌드박스 옵션 추가
-        self.chrome_options.add_argument("--disable-dev-shm-usage")  # dev-shm-usage 비활성화
+        self.chrome_options.add_argument("--headless")  # Headless 모드 활성화
+        self.chrome_options.add_argument("--no-sandbox")
+        self.chrome_options.add_argument("--disable-dev-shm-usage")
         # Chrome 드라이버 인스턴스 생성 시, ChromeOptions 사용
-        self.driver = webdriver.Chrome(service=self.service, options=self.chrome_options)
+        self.driver = webdriver.Chrome(service=Service(), options=self.chrome_options)
+
         self.url = url
 
     def scrap(self):
