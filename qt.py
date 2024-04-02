@@ -1,71 +1,89 @@
-import datetime, time, re
+import os
+import pytz
+import datetime
+import time
+import re
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.chrome.options import Options
 from bs4 import BeautifulSoup
 
-class Scraper:
-    def __init__(self, url):
-        self.chrome_options = Options()
-        self.chrome_options.add_argument("--headless=new")  # Headless 모드 활성화
-        self.chrome_options.add_argument("--no-sandbox")
-        self.chrome_options.add_argument("--disable-dev-shm-usage")
-        # Chrome 드라이버 인스턴스 생성 시, ChromeOptions 사용
-        self.driver = webdriver.Chrome(service=Service(), options=self.chrome_options)
+class QT:
+    def __init__(self):
+        self.url = "http://app.kccc.org/soonjang/?p=spirit/qt"
 
-        self.url = url
-
-    def scrap(self):
-        self.driver.get(self.url)
-        time.sleep(3)  # 페이지 로딩 대기
-        page_source = self.driver.page_source
-        soup = BeautifulSoup(page_source, "html.parser")
-        return soup
-
-class QT(Scraper):
-    def __init__(self, url):
-        super().__init__(url)
-        self.subject = ""
-        self.subject1 = ""
-        self.subject2 = ""
-        self.contents = []
-        self.number = ""
-        self.text = ""
-        self.separated_contents = []
-
-    def get_content(self):
-        soup = self.scrap()
-        self.subject = soup.find("h2", class_="qt_subject").get_text(strip=True)
-        match = re.match(r'(.+)\((.+)\)', self.subject)
-        if match:
-            self.subject1 = match.group(1).strip()  # 괄호 앞의 내용
-            self.subject2 = match.group(2).strip()  # 괄호 안의 내용
+    def get_cached_data(self):
+        cached_data = self.retrieve_cached_data()
+        if not cached_data or self.is_cache_expired(cached_data['date']):
+            new_data = self.scrape_data()
+            self.cache_data(new_data)
+            return new_data
         else:
-            print("No match found.")
+            return cached_data['data']
+
+    def retrieve_cached_data(self):
+        try:
+            with open('cached_data.txt', 'r') as file:
+                cached_data = eval(file.read())
+                return cached_data
+        except FileNotFoundError:
+            return None
+
+    def is_cache_expired(self, cached_date):
+        today = datetime.date.today()
+        return cached_date != today
+
+    def scrape_data(self):
+        chrome_options = Options()
+        chrome_options.add_argument("--headless=new")
+        chrome_options.add_argument("--no-sandbox")
+        chrome_options.add_argument("--disable-dev-shm-usage")
+        driver = webdriver.Chrome(service=Service(), options=chrome_options)
         
+        driver.get(self.url)
+        time.sleep(3)
+        page_source = driver.page_source
+        soup = BeautifulSoup(page_source, "html.parser")
+        
+        subject = soup.find("h2", class_="qt_subject").get_text(strip=True)
+        match = re.match(r'(.+)\((.+)\)', subject)
+        if match:
+            subject1 = match.group(1).strip()
+            subject2 = match.group(2).strip()
+        else:
+            subject1 = "No match found"
+            subject2 = "No match found"
+        
+        contents = []
         bible_text = soup.find("p", id="qt_bible")
         for text in bible_text.find_all("p"):
-            self.contents.append(text.get_text(strip=True) + "\n")  # 각 문장 끝에 공백 추가
+            contents.append(text.get_text(strip=True) + "\n")
         
-        for line in self.contents:
+        separated_contents = []
+        for line in contents:
             match = re.match(r'(\d+)(.+)', line)
             if match:
-                self.number = match.group(1)
-                self.text = match.group(2)
-                self.separated_contents.append((self.number, self.text))
-            else:
-                print(f"No match found for line: {line}")
+                number = match.group(1)
+                text = match.group(2)
+                separated_contents.append((number, text))
+        
+        data = {
+            "date": datetime.date.today(),
+            "data": {
+                "subject1": subject1,
+                "subject2": subject2,
+                "contents": separated_contents
+            }
+        }
+        
+        driver.quit()
+        return data
+
+    def cache_data(self, data):
+        with open('cached_data.txt', 'w') as file:
+            file.write(str(data))
 
 if __name__ == "__main__":
-    url = "http://app.kccc.org/soonjang/?p=spirit/qt"
-    qt_scraper = QT(url)
-    qt_scraper.get_content()
-
-    print("Date: ", datetime.date.today())
-    print("Subject:", qt_scraper.subject1)
-    print("Verse:", qt_scraper.subject2)
-    print("Contents:\n", qt_scraper.contents)
-
-    print("Separated:\n", qt_scraper.separated_contents)
-    print("number", qt_scraper.number)
-    print("text", qt_scraper.text)
+    qt = QT()
+    cached_data = qt.get_cached_data()
+    print(cached_data)

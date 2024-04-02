@@ -2,3 +2,4 @@ flask==3.0.2
 beautifulsoup4==4.12.3
 selenium==4.19.0
 pytz
+apscheduler
