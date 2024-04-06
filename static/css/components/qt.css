@@ -1,0 +1,126 @@
+.container {
+    background-color: white;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    max-width: 600px;
+    margin: auto;
+}
+
+.header {
+    font-family: 'NeoDunggeunmo';
+}
+
+.header-container {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    background-color: whitesmoke;
+    font-size: 18px;
+}
+
+.header__date {
+    display: inline;
+}
+
+.header__bible {
+    display: inline;
+}
+
+.header__title {
+    background-color: #ffd400;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 30px;
+    margin: 20px 0px;
+    padding: 15px 0px;
+    border: 3px solid;
+    border-radius: 3px;
+    border-right: 4px solid #edb23e;
+    border-bottom: 4px solid #edb23e;
+    font-size: 25px;
+    font-weight: 800;
+    box-shadow: 5px 5px;
+}
+
+.container a {
+    position: relative;
+}
+
+.qt {
+    padding: 15px;
+    border: 3px solid;
+    border-radius: 3px;
+    border-right: 4px solid rgb(180, 180, 180);
+    border-bottom: 4px solid rgb(180, 180, 180);
+    box-shadow: 5px 5px;
+}
+
+.qt-content {
+    display: flex;
+    width: 100%;
+    box-sizing: border-box;
+    line-height: 1.5;
+    font-family: 'PFStardust';
+    border-top: 1px solid whitesmoke;
+    border-bottom: 1px solid whitesmoke;
+}
+
+.qt-content__number {
+    margin: 5px 5px 5px 15px;
+    font-size: 12px;
+    font-weight: 400;
+    background-color: whitesmoke;
+
+    display: flex;
+    min-width: 20px;
+    height: 20px;
+    align-items: center;
+    justify-content: center;
+}
+
+.qt-content__text {
+    margin: 5px 0px;
+    padding: 0px 10px;
+    font-size: 14px;
+
+    box-sizing: border-box; /* 패딩과 테두리를 너비에 포함 */
+    text-align: justify; /* 텍스트를 양쪽 정렬합니다. */
+    overflow: hidden; /* 내용이 너비를 넘어갈 경우 처리 */
+}
+
+.qt-submit__btn {
+    font-family: 'PFStardust';
+    margin: 20px auto 0px; /* 상하 마진 20px, 좌우 마진 자동 조절 */
+    padding: 15px;
+    border: 3px solid;
+    border-radius: 3px;
+    border-right: 4px solid rgb(180, 180, 180);
+    border-bottom: 4px solid rgb(180, 180, 180);
+    font-size: 20px;
+    font-weight: 600;
+
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    box-sizing: border-box; /* 패딩과 테두리를 너비에 포함 */
+    position:fixed;
+    cursor: pointer;
+    box-shadow: 5px 5px;
+}
+
+.qt-submit__btn:hover {
+    border: 3px solid black;
+    border-radius: 3px;
+    border-right: 4px solid #36537b;
+    border-bottom: 4px solid #36537b;
+    background-color: #456ba0;
+    color: white;
+    box-shadow: 5px 5px black;
+}
+
+.qt-submit__btn i {
+    margin-left: 5px;
+    padding-top: 1px;
+}

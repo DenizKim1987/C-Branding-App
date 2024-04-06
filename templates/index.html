@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lagn="kr">
 <head>
+    <script src="https://kit.fontawesome.com/64813dad70.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="static/css/style.css" type="text/css" />
     <link
         rel="shortcut icon"
@@ -19,16 +20,19 @@
 <body>
 
 <div class="container">
-    <div class="top-row">
-        <div class="date">{{today}}</div>
-        <h3>{{subject2}}</h3>
-    </div>
-    <h1>{{subject1}}</h1>
+    <header class="header">
+        <div class="header-container">
+            <h3 class="header__date">{{today}}</h3>
+            <h3 class="header__bible">{{subject2}}</h3>
+        </div>
+        <h1 class="header__title">{{subject1}}</h1>
+    </header>
+    <div class="qt">
     {% for content in contents %}
-        <p><span class="content-number">{{ content[0] }}</span><span class="content-text">{{ content[1] }}</span></p>
+        <p class="qt-content"><span class="qt-content__number">{{ content[0] }}</span><span class="qt-content__text">{{ content[1] }}</span></p>
     {% endfor %}
-    <a href="#" class="button">오.큐.완!</a>
+    </div>
+    <a class="qt-submit__btn" href="#">▹ 오늘 큐티를 완료하시겠습니까?<i class="fa-solid fa-book-bible"></i></a>
 </div>
-<footer class="footer-copy">&copy; 2024 HongC QT Project</footer>
 </body>
 </html>
