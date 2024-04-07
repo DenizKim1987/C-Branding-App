@@ -25,7 +25,7 @@ def index():
 
     # 오늘 날짜의 데이터가 캐시되어 있는지, 데이터가 비어있는지 확인
     if weekday == 6:
-        return render_template("sunday.html")
+        return render_template("sunday.html", today=today)
     else:
         if cached_data["date"] != today or not cached_data["data"]:
             # 새로운 날짜의 데이터를 크롤링하고 캐시합니다.
