@@ -26,11 +26,11 @@
     padding: 10px;
     border: 3px solid;
     border-radius: 3px;
-    border-right: 4px solid #edb23e;
-    border-bottom: 4px solid #edb23e;
+    border-right: var(--retro__border-inside) #edb23e;
+    border-bottom: var(--retro__border-inside) #edb23e;
     font-size: 18px;
     font-weight: 800;
-    box-shadow: 5px 5px;
+    box-shadow: var(--retro__shadow);
     overflow: hidden; /* 내용이 너비를 넘어갈 경우 처리 */
 }
 
@@ -43,9 +43,9 @@
     padding: 15px 0px;
     border: 3px solid;
     border-radius: 3px;
-    border-right: 4px solid rgb(180, 180, 180);
-    border-bottom: 4px solid rgb(180, 180, 180);
-    box-shadow: 5px 5px;
+    border-right: var(--retro__border-inside) rgb(180, 180, 180);
+    border-bottom: var(--retro__border-inside) rgb(180, 180, 180);
+    box-shadow: var(--retro__shadow);
 }
 
 .qt-content {
@@ -88,8 +88,8 @@
     padding: 15px;
     border: 3px solid;
     border-radius: 3px;
-    border-right: 4px solid rgb(180, 180, 180);
-    border-bottom: 4px solid rgb(180, 180, 180);
+    border-right: var(--retro__border-inside) rgb(180, 180, 180);
+    border-bottom: var(--retro__border-inside) rgb(180, 180, 180);
     font-size: 15px;
     font-weight: 600;
 
@@ -99,20 +99,39 @@
     box-sizing: border-box; /* 패딩과 테두리를 너비에 포함 */
     position:fixed;
     cursor: pointer;
-    box-shadow: 5px 5px;
+    box-shadow: var(--retro__shadow);
 }
 
 .qt-submit__btn:hover {
     border: 3px solid black;
     border-radius: 3px;
-    border-right: 4px solid #36537b;
-    border-bottom: 4px solid #36537b;
+    border-right: var(--retro__border-inside) #36537b;
+    border-bottom: var(--retro__border-inside) #36537b;
     background-color: #456ba0;
     color: white;
-    box-shadow: 5px 5px black;
+    box-shadow: var(--retro__shadow);
 }
 
 .qt-submit__btn i {
     margin-left: 5px;
     padding-top: 1px;
 }
+
+.qt-sunday {
+    padding: 5px;
+}
+
+.qt-sunday img {
+    width: 100%;
+}
+
+.qt-sunday-submit__btn {
+    border: 3px solid black;
+    border-radius: 3px;
+    border-right: 4px solid #36537b;
+    border-bottom: 4px solid #36537b;
+    background-color: #456ba0;
+    color: white;
+    box-shadow: var(--retro__shadow);
+}
+

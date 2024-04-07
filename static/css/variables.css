@@ -1,3 +1,5 @@
 :root {
     --yellow: #fae100;
+    --retro__border-inside: 4px solid;
+    --retro__shadow: 5px 5px black;
 }
