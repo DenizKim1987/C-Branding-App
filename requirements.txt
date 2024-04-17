@@ -4,3 +4,4 @@ selenium==4.19.0
 pytz
 apscheduler
 pymongo==23.2.1
+flask-cors

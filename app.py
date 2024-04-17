@@ -1,10 +1,13 @@
 from flask import Flask, render_template, Response, jsonify
 import pytz, os, json
 from datetime import datetime
+from flask_cors import CORS
 
 from qt import QT
 
 app = Flask("QT")
+CORS(app)
+
 cached_data = {
     "date": None,
     "subject1": None,
@@ -65,3 +68,4 @@ def api_data():
 if __name__ == "__main__":
     port = int(os.getenv('PORT', 8000))
     app.run(host='0.0.0.0', port=port, debug=True)
+    
