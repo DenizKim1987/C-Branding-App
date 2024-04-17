@@ -3,5 +3,4 @@ beautifulsoup4==4.12.3
 selenium==4.19.0
 pytz
 apscheduler
-pymongo==23.2.1
 Flask-Cors==4.0.0
