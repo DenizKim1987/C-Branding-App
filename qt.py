@@ -3,6 +3,17 @@ from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.chrome.options import Options
 from bs4 import BeautifulSoup
+import firebase_admin
+from firebase_admin import credentials, firestore
+import json
+
+cred = credentials.Certificate(
+    "/Users/slave4jx/Documents/secrets/cbranding-app-firebase-adminsdk-hqzje-7b6fc40196.json"
+)
+firebase_admin.initialize_app(cred)
+
+db = firestore.client()  # Firestore 클라이언트 인스턴스 생성
+
 
 class Scraper:
     def __init__(self, url):
@@ -23,6 +34,7 @@ class Scraper:
         soup = BeautifulSoup(page_source, "html.parser")
         return soup
 
+
 class QT(Scraper):
     def __init__(self, url):
         super().__init__(url)
@@ -37,19 +49,21 @@ class QT(Scraper):
     def get_content(self):
         soup = self.scrap()
         self.subject = soup.find("h2", class_="qt_subject").get_text(strip=True)
-        match = re.match(r'(.+)\((.+)\)', self.subject)
+        match = re.match(r"(.+)\((.+)\)", self.subject)
         if match:
             self.subject1 = match.group(1).strip()  # 괄호 앞의 내용
             self.subject2 = match.group(2).strip()  # 괄호 안의 내용
         else:
             print("No match found.")
-        
+
         bible_text = soup.find("p", id="qt_bible")
         for text in bible_text.find_all("p"):
-            self.contents.append(text.get_text(strip=True) + "\n")  # 각 문장 끝에 공백 추가
-        
+            self.contents.append(
+                text.get_text(strip=True) + "\n"
+            )  # 각 문장 끝에 공백 추가
+
         for line in self.contents:
-            match = re.match(r'(\d+)(.+)', line)
+            match = re.match(r"(\d+)(.+)", line)
             if match:
                 self.number = match.group(1)
                 self.text = match.group(2)
@@ -57,10 +71,28 @@ class QT(Scraper):
             else:
                 print(f"No match found for line: {line}")
 
+
 if __name__ == "__main__":
     url = "http://app.kccc.org/soonjang/?p=spirit/qt"
     qt_scraper = QT(url)
     qt_scraper.get_content()
+
+    # 배열을 딕셔너리 리스트로 변환
+    contents_dicts = [
+        {"number": item[0], "text": item[1]} for item in qt_scraper.separated_contents
+    ]
+
+    data = {
+        "date": datetime.date.today().isoformat(),
+        "subject1": qt_scraper.subject1,
+        "subject2": qt_scraper.subject2,
+        "contents": contents_dicts,  # JSON 변환 대신 딕셔너리 리스트 사용
+    }
+
+    # Firebase에 데이터 업로드
+    doc_ref = db.collection("qt-data").document(data["date"])
+    doc_ref.set(data)
+    print("Data uploaded to Firebase with structured format.")
 
     print("Date: ", datetime.date.today())
     print("Subject:", qt_scraper.subject1)
