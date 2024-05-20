@@ -10,6 +10,7 @@ class Scraper:
         self.chrome_options.add_argument("--headless=new")  # Headless 모드 활성화
         self.chrome_options.add_argument("--no-sandbox")
         self.chrome_options.add_argument("--disable-dev-shm-usage")
+        self.chrome_options.add_argument("--disable-gpu")
         # Chrome 드라이버 인스턴스 생성 시, ChromeOptions 사용
         self.driver = webdriver.Chrome(service=Service(), options=self.chrome_options)
 
