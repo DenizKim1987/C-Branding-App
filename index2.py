@@ -10,15 +10,15 @@ from qt import QT
 app = Flask("QT")
 
 # 캐시를 저장할 전역 변수
-cached_data = {
-    "date": None,
-    "data": None
-}
+cached_data = {"date": None, "data": None}
+
+a = pytz.timezone
+
 
 @app.route("/")
 def index():
     global cached_data
-    korea_tz = pytz.timezone('Asia/Seoul')
+    korea_tz = pytz.timezone("Asia/Seoul")
     now_in_korea = datetime.now(korea_tz)
     today = now_in_korea.date()
     weekday = now_in_korea.weekday()
@@ -40,16 +40,19 @@ def index():
                     "data": {
                         "subject1": qt.subject1,
                         "subject2": qt.subject2,
-                        "contents": qt.separated_contents
-                    }
+                        "contents": qt.separated_contents,
+                    },
                 }
             else:
                 # 크롤링 결과가 비어있으면, 오류 메시지나 기본값 설정 등의 처리를 추가할 수 있습니다.
-                print("Crawling failed or returned empty data. Consider retrying or setting default values.")
+                print(
+                    "Crawling failed or returned empty data. Consider retrying or setting default values."
+                )
 
         # 캐시된 데이터를 사용하여 템플릿 렌더링
         return render_template("index.html", **cached_data["data"], today=today)
 
+
 if __name__ == "__main__":
-    port = int(os.getenv('PORT', 8000))
-    app.run(host='0.0.0.0', port=port, debug=True)
+    port = int(os.getenv("PORT", 8000))
+    app.run(host="0.0.0.0", port=port, debug=True)
