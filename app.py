@@ -5,8 +5,11 @@ from flask_cors import CORS
 
 from qt import QT
 
-import firebase_admin
-from firebase_admin import credentials, firestore
+# import firebase_admin
+# from firebase_admin import credentials, firestore
+
+# cred = credentials.Certificate("path/to/serviceAccountKey.json")
+# firebase_admin.initialize_app(cred)
 
 app = Flask("QT")
 CORS(app)
