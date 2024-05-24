@@ -106,7 +106,7 @@ if __name__ == "__main__":
         "subject1": qt_scraper.subject1,
         "subject2": qt_scraper.subject2,
         "contents": contents_dicts,
-        "video_id": latest_video_id if latest_video_id else "No video available",
+        "videoId": latest_video_id if latest_video_id else "No video available",
     }
 
     # Firebase에 데이터 업로드
@@ -120,4 +120,4 @@ if __name__ == "__main__":
     print("Separated:\n", qt_scraper.separated_contents)
     print("number", qt_scraper.number)
     print("text", qt_scraper.text)
-    print("video_id", latest_video_id)
+    print("videoId", latest_video_id)
