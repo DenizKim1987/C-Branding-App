@@ -14,3 +14,7 @@ Traceback (most recent call last):
   File "/Users/slave4jx/Documents/GitHub/cbranding/qt.py", line 2, in <module>
     from selenium import webdriver
 ModuleNotFoundError: No module named 'selenium'
+Traceback (most recent call last):
+  File "/Users/slave4jx/Documents/GitHub/cbranding/qt.py", line 2, in <module>
+    from selenium import webdriver
+ModuleNotFoundError: No module named 'selenium'

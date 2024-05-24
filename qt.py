@@ -103,14 +103,14 @@ if __name__ == "__main__":
     ]
     data = {
         "date": datetime.date.today().isoformat(),
-        "subject1": qt_scraper.subject1,
-        "subject2": qt_scraper.subject2,
-        "contents": contents_dicts,
+        "title": qt_scraper.subject1,
+        "bibleVerse": qt_scraper.subject2,
+        "bibleText": contents_dicts,
         "videoId": latest_video_id if latest_video_id else "No video available",
     }
 
     # Firebase에 데이터 업로드
-    doc_ref = db.collection("qt-data").document(data["date"])
+    doc_ref = db.collection("qtData").document(data["date"])
     doc_ref.set(data)
     print("Data uploaded to Firebase with structured format.")
     print("Date: ", datetime.date.today())
